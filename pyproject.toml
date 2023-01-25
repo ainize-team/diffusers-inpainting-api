@@ -1,6 +1,6 @@
 [tool.black]
 line-length = 119
-target-version = ["py38"]
+target-version = ["py39"]
 
 [tool.isort]
 ensure_newline_before_comments = true
@@ -13,20 +13,20 @@ multi_line_output = 3
 use_parentheses = true
 
 [tool.poetry]
-name = "python-template-repository"
+name = "Diffusers Inpainting API"
 version = "0.1.0"
 description = ""
-authors = ["YoungJae Kim <corea_kyj@naver.com>"]
+authors = ["YoungJae Kim <byeongal@comcom.ai>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.9"
 
 [tool.poetry.dev-dependencies]
-black = "^22.6.0"
-flake8 = "^5.0.4"
-isort = "^5.10.1"
-pre-commit = "^2.20.0"
+black = "^22.12.0"
+isort = "^5.11.4"
+flake8 = "^6.0.0"
+pre-commit = "^3.0.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
