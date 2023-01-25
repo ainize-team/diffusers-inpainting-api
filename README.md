@@ -1,28 +1,28 @@
-# Python Template Repository
+# PDiffusers Inpainting API
 
-[![Github Contributors](https://img.shields.io/github/contributors/byeongal/python-template-repository)](https://github.com/badges/byeongal/python-template-repository/contributors)
-[![GitHub issues](https://img.shields.io/github/issues/byeongal/python-template-repository.svg)](https://github.com/byeongal/python-template-repository/issues)
-![Github Last Commit](https://img.shields.io/github/last-commit/byeongal/python-template-repository)
-![Github Repository Size](https://img.shields.io/github/repo-size/byeongal/python-template-repository)
-[![GitHub Stars](https://img.shields.io/github/stars/byeongal/python-template-repository.svg)](https://github.com/byeongal/python-template-repository/stargazers)
-[![GitHub Forks](https://img.shields.io/github/forks/byeongal/python-template-repository.svg)](https://github.com/byeongal/python-template-repository/network/members)
-[![GitHub Watch](https://img.shields.io/github/watchers/byeongal/python-template-repository.svg)](https://github.com/byeongal/python-template-repository/watchers)
+[![Github Contributors](https://img.shields.io/github/contributors/ainize-team/diffusers-inpainting-api)](https://github.com/badges/ainize-team/diffusers-inpainting-api/contributors)
+[![GitHub issues](https://img.shields.io/github/issues/ainize-team/diffusers-inpainting-api.svg)](https://github.com/ainize-team/diffusers-inpainting-api/issues)
+![Github Last Commit](https://img.shields.io/github/last-commit/ainize-team/diffusers-inpainting-api)
+![Github Repository Size](https://img.shields.io/github/repo-size/ainize-team/diffusers-inpainting-api)
+[![GitHub Stars](https://img.shields.io/github/stars/ainize-team/diffusers-inpainting-api.svg)](https://github.com/ainize-team/diffusers-inpainting-api/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/ainize-team/diffusers-inpainting-api.svg)](https://github.com/ainize-team/diffusers-inpainting-api/network/members)
+[![GitHub Watch](https://img.shields.io/github/watchers/ainize-team/diffusers-inpainting-api.svg)](https://github.com/ainize-team/diffusers-inpainting-api/watchers)
 
-![Supported Python versions](https://img.shields.io/badge/python-3.8-brightgreen)
+![Supported Python versions](https://img.shields.io/badge/python-3.9-brightgreen)
 [![Imports](https://img.shields.io/badge/imports-isort-brightgreen)](https://pycqa.github.io/isort/)
 [![Code style](https://img.shields.io/badge/code%20style-black-black)](https://black.readthedocs.io/en/stable/)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://pre-commit.com/)
-![Package Management](https://img.shields.io/badge/package%20management-poetry-blue)
+![Package Management](https://img.shields.io/badge/package%20management-mamba-black)
 
 ## Description
-This repository a template repository for new Python Project. Before using this repository, you should modify [README.md](./README.md), [LICENSE](./LICENSE) and [pyproject.toml](./pyproject.toml).
+API Server for [diffusers](https://huggingface.co/docs/diffusers/index).
 
 ## Installation
-How to install your python code.
+TODO
 
 ## Usage
-How to use your python code.
+TODO
 
 ## License
 
-[![Licence](https://img.shields.io/github/license/byeongal/python-template-repository.svg)](./LICENSE)
+[![Licence](https://img.shields.io/github/license/ainize-team/diffusers-inpainting-api.svg)](./LICENSE)
