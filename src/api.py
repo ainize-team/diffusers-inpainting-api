@@ -1,16 +1,15 @@
 import os
 import shutil
 import uuid
-from typing import Tuple
 
 from celery import Celery
 from fastapi import APIRouter, File, HTTPException, Request, UploadFile
 from firebase_admin import db
 
+from enums import ResponseStatusEnum
 from schemas import AsyncTaskResponse, InpaintRequestParams
 from settings import firebase_settings
 from utils import get_now_timestamp, save_image_to_storage
-from enums import ResponseStatusEnum
 
 
 router = APIRouter()
@@ -23,18 +22,20 @@ def process(image_path: str, mask_image_path: str, data: InpaintRequestParams, t
     shutil.rmtree(task_id, ignore_errors=True)
     app_name = firebase_settings.firebase_app_name
     try:
-        db.reference(f"{app_name}/tasks/{task_id}").set({
-            "request": {
-                "prompt": req_data["prompt"],
-                "num_images_per_prompt": req_data["num_images_per_prompt"],
-                "guidance_scale": req_data["guidance_scale"],
-                "image_url": req_data["image_url"],
-                "mask_image_url": req_data["mask_image_url"],
-            },
-            "seed": req_data["seed"],
-            "status": ResponseStatusEnum.PENDING,
-            "updated_at": get_now_timestamp(),
-        })
+        db.reference(f"{app_name}/tasks/{task_id}").set(
+            {
+                "request": {
+                    "prompt": req_data["prompt"],
+                    "num_images_per_prompt": req_data["num_images_per_prompt"],
+                    "guidance_scale": req_data["guidance_scale"],
+                    "image_url": req_data["image_url"],
+                    "mask_image_url": req_data["mask_image_url"],
+                },
+                "seed": req_data["seed"],
+                "status": ResponseStatusEnum.PENDING,
+                "updated_at": get_now_timestamp(),
+            }
+        )
     except Exception as e:
         raise Exception(f"FireBase Error : {e}")
     try:
