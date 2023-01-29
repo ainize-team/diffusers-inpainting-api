@@ -10,6 +10,7 @@ from firebase_admin import db
 from schemas import AsyncTaskResponse, InpaintRequestParams
 from settings import firebase_settings
 from utils import get_now_timestamp, save_image_to_storage
+from enums import ResponseStatusEnum
 
 
 router = APIRouter()
@@ -22,16 +23,28 @@ def process(image_path: str, mask_image_path: str, data: InpaintRequestParams, t
     shutil.rmtree(task_id, ignore_errors=True)
     app_name = firebase_settings.firebase_app_name
     try:
-        db.reference(f"{app_name}/tasks/{task_id}").set(req_data)
+        db.reference(f"{app_name}/tasks/{task_id}").set({
+            "request": {
+                "prompt": req_data["prompt"],
+                "num_images_per_prompt": req_data["num_images_per_prompt"],
+                "guidance_scale": req_data["guidance_scale"],
+                "image_url": req_data["image_url"],
+                "mask_image_url": req_data["mask_image_url"],
+            },
+            "seed": req_data["seed"],
+            "status": ResponseStatusEnum.PENDING,
+            "updated_at": get_now_timestamp(),
+        })
     except Exception as e:
         raise Exception(f"FireBase Error : {e}")
     try:
         celery.send_task(
-            name="upscale",
+            name="inpaint",
             kwargs={
                 "task_id": task_id,
+                "data": req_data,
             },
-            queue="sr",
+            queue="diffusers-inpainting",
         )
     except Exception as e:
         raise Exception(f"CeleryError : {e}")
@@ -47,7 +60,7 @@ async def post_inpaint(
         celery: Celery = request.app.state.celery
 
         image_path = f"{task_id}/input.png"
-        mask_image_path = f"{task_id}/input.png"
+        mask_image_path = f"{task_id}/input_mask.png"
         os.makedirs(task_id, exist_ok=True)
         with open(image_path, "wb") as f:
             contents = await image.read()
