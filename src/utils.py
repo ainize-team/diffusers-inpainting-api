@@ -6,9 +6,6 @@ from firebase_admin import storage
 from settings import firebase_settings
 
 
-# from firebase_admin import storage
-
-
 def get_now_timestamp() -> int:
     return int(datetime.utcnow().timestamp() * 1000)
 
@@ -18,7 +15,7 @@ def save_image_to_storage(task_id: str, image_path: str) -> str:
     bucket = storage.bucket()
     base_name = os.path.basename(image_path)
 
-    blob = bucket.blob(f"{app_name}/{task_id}/request/{base_name}")
+    blob = bucket.blob(f"{app_name}/results/{task_id}/{base_name}")
     blob.upload_from_filename(image_path)
     blob.make_public()
 
