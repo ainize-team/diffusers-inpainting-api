@@ -3,11 +3,11 @@ import shutil
 import uuid
 
 from celery import Celery
-from fastapi import APIRouter, File, HTTPException, Request, UploadFile
+from fastapi import APIRouter, File, HTTPException, Request, UploadFile, status
 from firebase_admin import db
 
 from enums import ResponseStatusEnum
-from schemas import AsyncTaskResponse, InpaintRequestParams
+from schemas import AsyncTaskResponse, InpaintingResponse, InpaintRequestParams
 from settings import firebase_settings
 from utils import get_now_timestamp, save_image_to_storage
 
@@ -76,3 +76,27 @@ async def post_inpaint(
         return AsyncTaskResponse(task_id=task_id, updated_at=now)
     else:
         raise HTTPException(status_code=400, detail="Only Support PNG file")
+
+
+@router.get("/tasks/{task_id}", response_model=InpaintingResponse)
+async def get_task_image(task_id: str):
+    try:
+        ref = db.reference(f"{firebase_settings.firebase_app_name}/tasks/{task_id}")
+        data = ref.get()
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"FireBaseError({task_id}): {e}")
+    if data is None:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Task ID({task_id}) not found")
+    if data["status"] == ResponseStatusEnum.ERROR:
+        return InpaintingResponse(
+            status=data["status"],
+            updated_at=data["updated_at"],
+            result=data["error"]["error_message"],
+        )
+    return InpaintingResponse(
+        status=data["status"],
+        updated_at=data["updated_at"],
+        result={f"{i}": data["response"][i] for i in range(len(data["response"]))}
+        if data["status"] == ResponseStatusEnum.COMPLETED
+        else None,
+    )

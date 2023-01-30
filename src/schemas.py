@@ -1,6 +1,9 @@
 import json
+from typing import Dict, Union
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, HttpUrl
+
+from enums import ResponseStatusEnum
 
 
 class FormDataBaseModel(BaseModel):
@@ -33,3 +36,9 @@ class InpaintRequestParams(FormDataBaseModel):
     seed: int = Field(default=42, ge=0, le=4294967295)
     num_images_per_prompt: int = Field(2, ge=1, le=4, description="How many images you wish to generate")
     guidance_scale: float = Field(7.5, ge=0, le=50, description="how much the prompt will influence the results")
+
+
+class InpaintingResponse(BaseModel):
+    status: ResponseStatusEnum = ResponseStatusEnum.PENDING
+    updated_at: int = 0
+    result: Union[Dict[str, HttpUrl], None, str] = None
