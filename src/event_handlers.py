@@ -28,3 +28,11 @@ def start_app_handler(app: FastAPI) -> Callable:
         _setup_celery(app)
 
     return startup
+
+
+def stop_app_handler(app: FastAPI) -> Callable:
+    def shutdown() -> None:
+        logger.info("Running App Shutdown Handler.")
+        del app.state.celery
+
+    return shutdown
