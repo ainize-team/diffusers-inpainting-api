@@ -18,11 +18,52 @@
 API Server for [diffusers](https://huggingface.co/docs/diffusers/index).
 
 ## Installation
-TODO
+1. build docker image
+```shell
+git clone https://github.com/ainize-team/diffusers-inpainting-api
+cd diffusers-inpainting-api
+docker build -t inpainting-api .
+```
+
+2. Run Docker Image
+```
+docker run -d --name inpainting-api-container -p 8000:8000 \
+    -e BROKER_URI=<BROKER_URI> \
+    -e FIREBASE_APP_NAME=<FIREBASE_APP_NAME>  \
+    -e DATABASE_URL=<DATABASE_URL> \
+    -e STORAGE_BUCKET=<STORAGE_BUCKET> \
+    -v <firebase_credential_dir_path>:/app/key inpainting-api
+```
+
+or
+
+```shell
+docker run -d --name inpainting-api-container -p 8000:8000 \
+    --env-file .env
+    -v <firebase_credential_dir_path>:/app/key inpainting-api
+```
 
 ## Usage
-TODO
+```
+curl -X 'POST' \
+  'http://192.168.1.15:8003/inpaint' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'data={
+  "prompt": "Face of a yellow cat, high resolution, sitting on a park bench",
+  "seed": 42,
+  "num_images_per_prompt": 2,
+  "guidance_scale": 7.5
+}' \
+  -F 'image=@image.png;type=image/png' \
+  -F 'mask_image=@mask_image.png;type=image/png'
+```
 
+![image](./sample_image/image.png)
+
+![mask_iamge](./sample_image/mask_image.png)
+
+RESULT TO DO
 ## License
 
 [![Licence](https://img.shields.io/github/license/ainize-team/diffusers-inpainting-api.svg)](./LICENSE)
