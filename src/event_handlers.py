@@ -19,7 +19,7 @@ def _setup_firebase() -> None:
 
 def _setup_celery(app: FastAPI) -> None:
     logger.info("Setup Celery")
-    app.state.celery = Celery(broker=celery_settings.broker_uri)
+    app.state.celery = Celery(broker=f"{celery_settings.broker_base_uri}/{celery_settings.vhost_name}")
 
 
 def start_app_handler(app: FastAPI) -> Callable:
