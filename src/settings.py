@@ -7,7 +7,8 @@ class ServerSettings(BaseSettings):
 
 
 class CelerySettings(BaseSettings):
-    broker_uri: str = "amqp://guest:guest@localhost:5672//"
+    broker_base_uri: str = "amqp://guest:guest@localhost:5672/"
+    vhost_name: str = "/"
 
 
 class FirebaseSettings(BaseSettings):

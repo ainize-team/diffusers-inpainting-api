@@ -28,7 +28,8 @@ docker build -t inpainting-api .
 2. Run Docker Image
 ```
 docker run -d --name inpainting-api-container -p 8000:8000 \
-    -e BROKER_URI=<BROKER_URI> \
+    -e BROKER_BASE_URI=<BROKER_BASE_URI> \
+    -e VHOST_NAME=<VHOST_NAME> \
     -e FIREBASE_APP_NAME=<FIREBASE_APP_NAME>  \
     -e DATABASE_URL=<DATABASE_URL> \
     -e STORAGE_BUCKET=<STORAGE_BUCKET> \
