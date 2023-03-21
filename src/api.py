@@ -26,6 +26,7 @@ def process(image_path: str, mask_image_path: str, data: InpaintRequestParams, t
             {
                 "request": {
                     "prompt": req_data["prompt"],
+                    "negative_prompt": req_data["negative_prompt"],
                     "num_images_per_prompt": req_data["num_images_per_prompt"],
                     "guidance_scale": req_data["guidance_scale"],
                     "image_url": req_data["image_url"],

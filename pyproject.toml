@@ -16,7 +16,7 @@ use_parentheses = true
 name = "Diffusers Inpainting API"
 version = "0.1.0"
 description = ""
-authors = ["YoungJae Kim <byeongal@comcom.ai>"]
+authors = ["YoungJae Kim <byeongal@comcom.ai>", "Donghoon baek <baek@comcom.ai>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
