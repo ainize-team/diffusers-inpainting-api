@@ -1,5 +1,5 @@
 import json
-from typing import Dict, Union
+from typing import Dict, Union, Optional
 
 from pydantic import BaseModel, Field, HttpUrl
 
@@ -32,6 +32,10 @@ class InpaintRequestParams(FormDataBaseModel):
     prompt: str = Field(
         ...,
         description="Your prompt (what you want to add in place of what you are removing)",
+    )
+    negative_prompt: Optional[str] = Field(
+        "",
+        description="prompt value that you do not want to see in the resulting image",
     )
     seed: int = Field(default=42, ge=0, le=4294967295)
     num_images_per_prompt: int = Field(2, ge=1, le=4, description="How many images you wish to generate")
