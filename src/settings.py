@@ -7,15 +7,14 @@ class ServerSettings(BaseSettings):
 
 
 class CelerySettings(BaseSettings):
-    broker_base_uri: str = "amqp://guest:guest@localhost:5672/"
-    vhost_name: str = "/"
+    broker_uri: str = "amqp://guest:guest@localhost:5672//"
 
 
 class FirebaseSettings(BaseSettings):
     firebase_app_name: str = "diffusers-inpainting"
     cred_path: str = "./key/serviceAccountKey.json"
-    database_url: str
-    storage_bucket: str
+    firebase_database_url: str
+    firebase_storage_bucket: str
 
 
 server_settings = ServerSettings()

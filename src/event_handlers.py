@@ -13,13 +13,13 @@ def _setup_firebase() -> None:
     cred = credentials.Certificate(firebase_settings.cred_path)
     firebase_admin.initialize_app(
         cred,
-        {"databaseURL": firebase_settings.database_url, "storageBucket": firebase_settings.storage_bucket},
+        {"databaseURL": firebase_settings.firebase_database_url, "storageBucket": firebase_settings.firebase_storage_bucket},
     )
 
 
 def _setup_celery(app: FastAPI) -> None:
     logger.info("Setup Celery")
-    app.state.celery = Celery(broker=f"{celery_settings.broker_base_uri}/{celery_settings.vhost_name}")
+    app.state.celery = Celery(broker=celery_settings.broker_uri)
 
 
 def start_app_handler(app: FastAPI) -> Callable:
