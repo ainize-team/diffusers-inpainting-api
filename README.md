@@ -17,37 +17,62 @@
 ## Description
 API Server for [diffusers](https://huggingface.co/docs/diffusers/index).
 
-## Installation
-1. build docker image
+## How to start
+### Using docker-compose(recommended)
+1. Clone repository
 ```shell
 git clone https://github.com/ainize-team/diffusers-inpainting-api
 cd diffusers-inpainting-api
-docker build -t inpainting-api .
 ```
 
-2. Run Docker Image
+2. Edit [docker-compose.yml](./docker-compose.yml), [rabbitmq.env](./envs/rabbitmq.env.sample) and [fastapi.env](./envs/fastapi.env.sample) for your project.
+
+3. Run containers
+```shell
+docker-compose up -d
 ```
-docker run -d --name inpainting-api-container -p 8000:8000 \
-    -e BROKER_BASE_URI=<BROKER_BASE_URI> \
-    -e VHOST_NAME=<VHOST_NAME> \
-    -e FIREBASE_APP_NAME=<FIREBASE_APP_NAME>  \
-    -e DATABASE_URL=<DATABASE_URL> \
-    -e STORAGE_BUCKET=<STORAGE_BUCKET> \
-    -v <firebase_credential_dir_path>:/app/key inpainting-api
+
+4. (Optional) config rabbimq user setting
+```shell
+docker exec diffusers-inpainting-rabbitmq -it /bin/bash
+cd scripts
+./init_rabbitmq
+```
+
+### Using docker
+1. Clone repository
+```shell
+git clone https://github.com/ainize-team/diffusers-inpainting-api
+cd diffusers-inpainting-api
+```
+
+2. Build docker image
+```shell
+docker build -t diffusers-inpainting-fastapi .
+```
+
+3. Run docker container
+```
+docker run -d --name diffusers-inpainting-fastapi -p 8000:8000 \
+    -e BROKER_URI=<broker_uri> \
+    -e FIREBASE_APP_NAME=<firebase_app_name>  \
+    -e FIREBASE_DATABASE_URL=<firebase_database_url> \
+    -e FIREBASE_STORAGE_BUCKET=<firebase_storage_bucket> \
+    -v <firebase_credential_dir_path>:/app/key diffusers-inpainting-fastapi
 ```
 
 or
 
 ```shell
-docker run -d --name inpainting-api-container -p 8000:8000 \
+docker run -d --name diffusers-inpainting-fastapi -p 8000:8000 \
     --env-file .env
-    -v <firebase_credential_dir_path>:/app/key inpainting-api
+    -v <firebase_credential_dir_path>:/app/key diffusers-inpainting-fastapi
 ```
 
 ## Usage
 ```
 curl -X 'POST' \
-  'http://192.168.1.15:8003/inpaint' \
+  'http://192.168.1.15:8000/inpaint' \
   -H 'accept: application/json' \
   -H 'Content-Type: multipart/form-data' \
   -F 'data={
